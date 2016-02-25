@@ -8,9 +8,25 @@ var JWT_SECRET = process.env.JWT_SECRET;
 
 var User;
 
+// var userSchema = mongoose.Schema({
+//   email: { type: String, required: true },
+//   password: { type: String, required: true }
+// });
+
+// define the schema for our user model
 var userSchema = mongoose.Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true }
+
+    local            : {
+        email        : String,
+        password     : String,
+    },
+    facebook         : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    }
+
 });
 
 userSchema.statics.register = function(user, cb) {
@@ -82,48 +98,27 @@ userSchema.statics.isAuthenticated = function(req, res, next) {
   });
 };
 
-User = mongoose.model('User', userSchema);
-module.exports = User;
-
 ////////
-var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
-
-// define the schema for our user model
-var userSchema = mongoose.Schema({
-
-    local            : {
-        email        : String,
-        password     : String,
-    },
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    }
-
-});
 
 // checking if password is valid using bcrypt
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
-};
-
-
-// this method hashes the password and sets the users password
-userSchema.methods.hashPassword = function(password) {
-    var user = this;
-
-    // hash the password
-    bcrypt.hash(password, null, null, function(err, hash) {
-        if (err)
-            return next(err);
-
-        user.local.password = hash;
-    });
-
-};
+// userSchema.methods.validPassword = function(password) {
+//     return bcrypt.compareSync(password, this.local.password);
+// };
+//
+//
+// // this method hashes the password and sets the users password
+// userSchema.methods.hashPassword = function(password) {
+//     var user = this;
+//
+//     // hash the password
+//     bcrypt.hash(password, null, null, function(err, hash) {
+//         if (err)
+//             return next(err);
+//
+//         user.local.password = hash;
+//     });
+//
+// };
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
