@@ -1,0 +1,30 @@
+<div class="col-md-2">
+  Left Menu
+</div>
+<div class="col-md-8">
+  <div class="row">
+    <h3>March</h3>
+  </div>
+  <div ng-repeat="bill in allBills track by $index">
+    <div class="row">
+      <div class="col-md-2">
+        {{bill.due}}
+      </div>
+      <div class="col-md-6">
+        {{bill.name}}
+      </div>
+      <div class="col-md-2">
+        {{bill.amount}}
+      </div>
+      <div class="col-md-2">
+        Amount owed
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-2">
+  <h5>
+    You are owed:
+  </h5>
+  <b>$342.01</b>
+</div>
