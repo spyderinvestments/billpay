@@ -1,7 +1,7 @@
 'use strict';
 
 //index, navbar controller
-app.controller('dashboardCtrl', function($scope, $state) {
+app.controller('dashboardCtrl', function($scope, $state, $uibModal, $log) {
   $scope.allBills = [
     {
       name: 'Rent',
@@ -60,4 +60,31 @@ app.controller('dashboardCtrl', function($scope, $state) {
     }
   ]
 
+  $scope.items = ['item1', 'item2', 'item3'];
+
+  $scope.animationsEnabled = true;
+
+  $scope.open = function (size) {
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+
+  $scope.toggleAnimation = function () {
+    $scope.animationsEnabled = !$scope.animationsEnabled;
+  };
 });

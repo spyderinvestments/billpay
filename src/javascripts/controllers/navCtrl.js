@@ -1,7 +1,6 @@
 'use strict';
 
 app.controller('homeCtrl', function ($scope) {
-  console.log('inside home carousel controller');
   $scope.myInterval = 5000;
   $scope.noWrapSlides = false;
   var slides = $scope.slides = [];

@@ -1,35 +1,46 @@
 <!-- left menu -->
 <div class="col-md-2">
   <a ui-sref="dashboard">Dashboard</a>
-  <h6>Groups:</h6>
-  <p>Roommates</p>
-  <h6>Friends:</h6>
-  <p>None yet!</p>
-  <h6>Invite friends!</h6>
+  <h5>Groups: <small>Roommates</small></h5>
+  <h5>Friends: <small>None yet!</small></h5>
+  <h5>Invite friends!</h5>
   <input type="text" placeholder="Enter an email" />
-  <button class="btn btn-small">Send</input>
+  <button class="btn btn-info btn-xs">Send</input>
 </div>
 
 <!-- content -->
+
+<!-- <div ng-controller="CollapseDemoCtrl">
+	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
+	<hr>
+	<div uib-collapse="isCollapsed">
+		<div class="well well-lg">Some content</div>
+	</div>
+</div> -->
+
 <div class="col-md-8">
   <div class="row">
-    <h3>March</h3>
+    <button type="button" class="btn btn-default btn-lg btn-block" ng-click="isCollapsed = !isCollapsed">March 2016</button>
   </div>
-  <div ng-repeat="bill in allBills track by $index">
+  <div ng-repeat="bill in allBills track by $index" uib-collapse="isCollapsed">
     <div class="row">
       <div class="col-md-2">
-        {{bill.due}}
+        {{bill.due | date}}
       </div>
       <div class="col-md-6">
         {{bill.name}}
       </div>
       <div class="col-md-2">
-        {{bill.amount}}
+        {{bill.amount | currency}}
       </div>
       <div class="col-md-2">
         Amount owed
       </div>
     </div>
+  </div>
+  <div>
+    <button class="btn btn-warning btn-sm" ng-click="open('sm')">Add Bill</button>
+    <button class="btn btn-default btn-sm" ng-click="open('sm')">Pay Bill</button>
   </div>
 </div>
 
@@ -39,4 +50,27 @@
     You are owed:
   </h5>
   <b>$342.01</b>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal-header">
+    <h3 class="modal-title">I'm a modal!</h3>
+</div>
+<div class="modal-body">
+    <ul>
+        <li ng-repeat="item in items">
+            <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
+        </li>
+    </ul>
+    Selected: <b>{{ selected.item }}</b>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
