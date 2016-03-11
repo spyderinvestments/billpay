@@ -8,39 +8,47 @@ var JWT_SECRET = process.env.JWT_SECRET;
 
 var User;
 
-// var userSchema = mongoose.Schema({
-//   email: { type: String, required: true },
-//   password: { type: String, required: true }
-// });
-
-// define the schema for our user model
 var userSchema = mongoose.Schema({
-
-    local            : {
-        email        : String,
-        password     : String,
-    },
-    facebook         : {
-        id           : String,
-        token        : String,
-        email        : String,
-        name         : String
-    }
-
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  }
 });
 
-userSchema.statics.register = function(user, cb) {
+// define the schema for our user model
+// var userSchema = mongoose.Schema({
+//
+//   local: {
+//     email: String,
+//     password: String,
+//   },
+//   facebook: {
+//     id: String,
+//     token: String,
+//     email: String,
+//     name: String
+//   }
+//
+// });
+
+userSchema.statics.register = function (user, cb) {
   var email = user.email;
   var password = user.password;
-  User.findOne({email: email}, function(err, user){
-    if(err || user) return cb(err || 'Email already taken.');
-    bcrypt.genSalt(13, function(err1, salt) {
-      bcrypt.hash(password, salt, function(err2, hash) {
-        if(err1 || err2) return cb(err1 || err2);
+  User.findOne({
+    email: email
+  }, function (err, user) {
+    if (err || user) return cb(err || 'Email already taken.');
+    bcrypt.genSalt(13, function (err1, salt) {
+      bcrypt.hash(password, salt, function (err2, hash) {
+        if (err1 || err2) return cb(err1 || err2);
         var newUser = new User();
         newUser.email = email;
         newUser.password = hash;
-        newUser.save(function(err, savedUser){
+        newUser.save(function (err, savedUser) {
           savedUser.password = null;
           cb(err, savedUser);
         });
@@ -49,11 +57,13 @@ userSchema.statics.register = function(user, cb) {
   });
 };
 
-userSchema.statics.authenticate = function(inputUser, cb){
-  User.findOne({email: inputUser.email}, function(err, dbUser) {
-    if(err || !dbUser) return cb(err || 'Incorrect email or password.');
-    bcrypt.compare(inputUser.password, dbUser.password, function(err, isGood){
-      if(err || !isGood) return cb(err || 'Incorrect email or password.');
+userSchema.statics.authenticate = function (inputUser, cb) {
+  User.findOne({
+    email: inputUser.email
+  }, function (err, dbUser) {
+    if (err || !dbUser) return cb(err || 'Incorrect email or password.');
+    bcrypt.compare(inputUser.password, dbUser.password, function (err, isGood) {
+      if (err || !isGood) return cb(err || 'Incorrect email or password.');
       dbUser.password = null;
       cb(null, dbUser);
     });
@@ -61,7 +71,7 @@ userSchema.statics.authenticate = function(inputUser, cb){
 };
 
 // Generate JWT token for a user
-userSchema.methods.token = function() {
+userSchema.methods.token = function () {
   var payload = {
     email: this.email,
     _id: this._id,
@@ -72,7 +82,7 @@ userSchema.methods.token = function() {
 };
 
 // Authentication Middleware
-userSchema.statics.isAuthenticated = function(req, res, next) {
+userSchema.statics.isAuthenticated = function (req, res, next) {
   if (!req.headers.authorization) {
     return res.status(401).send('Authentication required.');
   }
@@ -86,7 +96,7 @@ userSchema.statics.isAuthenticated = function(req, res, next) {
   } catch (err) {
     return res.status(401).send('Authentication failed.  Invalid token.');
   }
-  if(moment().isAfter(moment.unix(payload.exp))) {
+  if (moment().isAfter(moment.unix(payload.exp))) {
     return res.status(401).send('Authentication failed.  Token expired.');
   }
   var userId = payload._id;
@@ -121,4 +131,5 @@ userSchema.statics.isAuthenticated = function(req, res, next) {
 // };
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+User = mongoose.model('User', userSchema);
+module.exports = User;

@@ -9,10 +9,10 @@ var User = require('../models/user');
 
 router.post('/register', function (req, res) {
   console.log('register', req.body);
-  // User.register(req.body, (err, token) => {
-  //   if (err) return res.status(400).send(err);
-  //   res.send(token);
-  // });
+  User.register(req.body, (err, token) => {
+    if (err) return res.status(400).send(err);
+    res.send(token);
+  });
 });
 
 router.post('/login', function (req, res) {
@@ -43,20 +43,20 @@ router.get('/profile', isLoggedIn, function(req, res) {
 // FACEBOOK ROUTES =====================
 // =====================================
 // route for facebook authentication and login
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-
-// handle the callback after facebook has authenticated the user
-app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', {
-        successRedirect : '/profile',
-        failureRedirect : '/'
-    }));
-
-// route for logging out
-app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
+// router.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+//
+// // handle the callback after facebook has authenticated the user
+// router.get('/auth/facebook/callback',
+//     passport.authenticate('facebook', {
+//         successRedirect : '/profile',
+//         failureRedirect : '/'
+//     }));
+//
+// // route for logging out
+// router.get('/logout', function(req, res) {
+//     req.logout();
+//     res.redirect('/');
+// });
 
 
 module.exports = router;
