@@ -57,7 +57,7 @@ userSchema.statics.register = function (user, cb) {
   });
 };
 
-userSchema.statics.authenticate = function (inputUser, cb) {
+userSchema.statics.login = function (inputUser, cb) {
   User.findOne({
     email: inputUser.email
   }, function (err, dbUser) {

@@ -2,6 +2,11 @@
 
 //index, navbar controller
 app.controller('dashboardCtrl', function($scope, $state, $uibModal, $log) {
+
+  if (!localStorage.getItem("token")) {
+    $state.go('login');
+  } 
+
   $scope.allBills = [
     {
       name: 'Rent',

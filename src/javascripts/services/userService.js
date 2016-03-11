@@ -23,7 +23,7 @@ app.service('userService', function($http) {
     })
   }
 
-  this.login = function(username, password) {
+  this.login = function(email, password) {
     return $http({
       method: 'POST',
       url: '/users/login',
@@ -31,8 +31,8 @@ app.service('userService', function($http) {
         authorization: `Bearer ${localStorage.getItem("token")}`
       },
       data: {
-        email: user.email,
-        password: user.password,
+        email: email,
+        password: password,
       }
     })
     .then(function(resp) {
@@ -42,4 +42,9 @@ app.service('userService', function($http) {
       console.error(err.data);
     })
   }
+
+  this.logout = function() {
+
+  }
+
 });

@@ -18,10 +18,10 @@ app.controller('loginCtrl', function($scope, $state, userService) {
   }
 
   $scope.login = function() {
-    userService.login($scope.loginUsername, $scope.loginPassword)
+    userService.login($scope.loginEmail, $scope.loginPassword)
     .then(function() {
       console.log('logged in');
-      $state.go('find');
+      $state.go('dashboard');
     })
   }
 });
