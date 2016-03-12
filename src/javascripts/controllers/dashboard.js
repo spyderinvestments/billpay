@@ -1,79 +1,82 @@
 'use strict';
 
 //index, navbar controller
-app.controller('dashboardCtrl', function($scope, $state, $uibModal, $log) {
+app.controller('dashboardCtrl', function ($scope, $state, $uibModal, $log) {
 
   if (!localStorage.getItem("token")) {
     $state.go('login');
-  } 
+  }
 
-  $scope.allBills = [
-    {
-      name: 'Rent',
-      amount: '4000',
-      due: '3/1/2016',
-      repeats: 'monthly',
-      split: [
-        'Joe', 'Mike', 'Steve'
-      ],
-      notes: 'none',
-      paid: false
-    },
-    {
-      name: 'Internet/Cable',
-      amount: '200',
-      due: '3/1/2016',
-      repeats: 'monthly',
-      split: [
-        'Joe', 'Mike', 'Steve'
-      ],
-      notes: 'none',
-      paid: false
-    },
-    {
-      name: 'Water',
-      amount: '400',
-      due: '3/1/2016',
-      repeats: 'monthly',
-      split: [
-        'Joe', 'Mike', 'Steve'
-      ],
-      notes: 'none',
-      paid: false
-    },
-    {
-      name: 'Random',
-      amount: '60',
-      due: '3/1/2016',
-      repeats: 'monthly',
-      split: [
-        'Joe', 'Mike', 'Steve'
-      ],
-      notes: 'none',
-      paid: false
-    },
-    {
-      name: 'Dinner',
-      amount: '50',
-      due: '3/1/2016',
-      repeats: 'monthly',
-      split: [
-        'Steph'
-      ],
-      notes: 'none',
-      paid: false
-    }
-  ]
+  $scope.allBills = [{
+    name: 'Rent',
+    amount: '4000',
+    due: '3/1/2016',
+    repeats: 'monthly',
+    split: [
+      'Joe', 'Mike', 'Steve'
+    ],
+    notes: 'none',
+    paid: false
+  }, {
+    name: 'Internet/Cable',
+    amount: '200',
+    due: '3/1/2016',
+    repeats: 'monthly',
+    split: [
+      'Joe', 'Mike', 'Steve'
+    ],
+    notes: 'none',
+    paid: false
+  }, {
+    name: 'Water',
+    amount: '400',
+    due: '3/1/2016',
+    repeats: 'monthly',
+    split: [
+      'Joe', 'Mike', 'Steve'
+    ],
+    notes: 'none',
+    paid: false
+  }, {
+    name: 'Random',
+    amount: '60',
+    due: '3/1/2016',
+    repeats: 'monthly',
+    split: [
+      'Joe', 'Mike', 'Steve'
+    ],
+    notes: 'none',
+    paid: false
+  }, {
+    name: 'Dinner',
+    amount: '50',
+    due: '3/1/2016',
+    repeats: 'monthly',
+    split: [
+      'Steph'
+    ],
+    notes: 'none',
+    paid: false
+  }];
 
-  $scope.items = ['item1', 'item2', 'item3'];
-
-  $scope.animationsEnabled = true;
 
   $scope.open = function (size) {
 
+    function addBillCtrl($scope, $uibModalInstance) {
+      $scope.ok = function () {
+        //TODO: do something
+        // $uibModalInstance.close($scope.selected.item);
+      };
+
+      $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+      };
+    }
+
     var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      controller: 'ModalInstanceCtrl',
+      animation: true,
+      controller: addBillCtrl,
+      templateUrl: 'myModalContent.html',
       size: size,
       resolve: {
         items: function () {
@@ -89,7 +92,7 @@ app.controller('dashboardCtrl', function($scope, $state, $uibModal, $log) {
     });
   };
 
-  $scope.toggleAnimation = function () {
-    $scope.animationsEnabled = !$scope.animationsEnabled;
-  };
+
+
+
 });
