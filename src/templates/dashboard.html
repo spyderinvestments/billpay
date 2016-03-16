@@ -8,15 +8,6 @@
   <button class="btn btn-info btn-xs">Send</input>
 </div>
 
-<!-- content -->
-
-<!-- <div ng-controller="CollapseDemoCtrl">
-	<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>
-	<hr>
-	<div uib-collapse="isCollapsed">
-		<div class="well well-lg">Some content</div>
-	</div>
-</div> -->
 
 <div class="col-md-8">
   <div class="row">
@@ -56,18 +47,48 @@
 <div>
   <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header">
-      <h3 class="modal-title">Add Bill</h3>
+      <h3 class="modal-title">Add A New Bill</h3>
     </div>
     <div class="modal-body">
-      <ul>
-        <li ng-repeat="item in items">
-          <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>
-        </li>
-      </ul>
-      Selected: <b>{{ selected.item }}</b>
+
+      <form class="form-horizontal" ng-submit="addBill(bill)">
+        <fieldset>
+
+          <div class="form-group">
+            <label for="splitters" class="col-md-3 control-label">Share Bill With</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="splitters" placeholder="Enter people you wish to split the bill with" ng-model="bill.splitters">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description" class="col-md-3 control-label">Description</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="description" ng-model="bill.description">
+            </div>
+            <label for="amount" class="col-md-3 control-label">Amount</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="amount" ng-model="bill.amount">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="due" class="col-md-3 control-label">Due</label>
+            <div class="col-md-9">
+              <input type="date" class="form-control" id="due" placeholder="mm/dd/yyyy" ng-model="bill.due">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notes" class="col-md-3 control-label">Additional Notes:</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="notes" ng-model="bill.notes">
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+      <button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
       <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     </div>
   </script>

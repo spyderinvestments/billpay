@@ -9,14 +9,10 @@ var JWT_SECRET = process.env.JWT_SECRET;
 var User;
 
 var userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  friends: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+  bills : [{type: mongoose.Schema.ObjectId, ref: 'Bill'}]
 });
 
 // define the schema for our user model
