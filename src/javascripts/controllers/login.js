@@ -1,27 +1,40 @@
 'use strict';
 
 //index, navbar controller
-app.controller('loginCtrl', function($scope, $state, userService) {
-  // if (localStorage.getItem("token")) {
-  //   $state.go('home');
-  // } else {
-  //   $state.go('login');
-  // }
+app.controller('loginCtrl', function ($scope, $state, $rootScope, userService) {
+  if (localStorage.getItem("token")) {
+    $state.go('dashboard');
+  }
 
-  $scope.register = function(user) {
-    console.log(user);
+  $rootScope.loggedIn = !localStorage.getItem("token");
+
+  $scope.register = function (user) {
     userService.register(user)
-    .then(function() {
-      console.log('registered');
-      // $state.go('find');
-    })
+      .then(function (resp) {
+        localStorage.setItem("token", resp.data);
+        $rootScope.loggedIn = !localStorage.getItem("token");
+        $scope.go('dashboard');
+      }, function (err) {
+        console.error(err.data);
+        $scope.error = err.data;
+      });
   }
 
-  $scope.login = function() {
+  $scope.login = function () {
     userService.login($scope.loginEmail, $scope.loginPassword)
-    .then(function() {
-      console.log('logged in');
-      $state.go('dashboard');
-    })
+      .then(function (resp) {
+        localStorage.setItem("token", resp.data);
+        $rootScope.loggedIn = !localStorage.getItem("token");
+        $state.go('dashboard');
+      }, function (err) {
+        $scope.error = err.data;
+      });
   }
+
+  $scope.logout = function () {
+    localStorage.removeItem("token");
+    $rootScope.loggedIn = !localStorage.getItem("token");
+    $state.go('home');
+  }
+
 });

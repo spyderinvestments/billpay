@@ -1,10 +1,13 @@
 'use strict';
 
 app.controller('homeCtrl', function ($scope) {
+
+  //slide stuff
   $scope.myInterval = 5000;
   $scope.noWrapSlides = false;
   var slides = $scope.slides = [];
   var currIndex = 0;
+
 
   $scope.addSlide = function() {
     var newWidth = 600 + slides.length + 1;

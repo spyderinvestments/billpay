@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('userService', function($http) {
+app.service('userService', function($http, $state) {
 
   this.register = function(user) {
     return $http({
@@ -14,13 +14,8 @@ app.service('userService', function($http) {
         email: user.email,
         password: user.password,
       }
-    })
-    .then(function(resp) {
-      console.log(resp);
-      localStorage.setItem("token", resp.data);
-    }, function(err) {
-      console.error(err.data);
-    })
+    });
+
   }
 
   this.login = function(email, password) {
@@ -34,17 +29,8 @@ app.service('userService', function($http) {
         email: email,
         password: password,
       }
-    })
-    .then(function(resp) {
-      console.log(resp);
-      localStorage.setItem("token", resp.data);
-    }, function(err) {
-      console.error(err.data);
-    })
+    });
   }
 
-  this.logout = function() {
-
-  }
 
 });

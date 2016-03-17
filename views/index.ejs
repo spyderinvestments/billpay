@@ -19,7 +19,7 @@
 
   </head>
 
-  <body ng-app='mainApp'>
+  <body ng-app='mainApp' ng-controller="loginCtrl">
 
     <!-- Navbar -->
     <nav class="navbar navbar-inverse">
@@ -38,7 +38,8 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li><a ui-sref="dashboard">Dashboard</a></li>
-            <li><a ui-sref="login">Login/Register</a></li>
+            <li><a ui-sref="login" ng-if="loggedIn">Login/Register</a></li>
+            <li><a href="#" ng-if="!loggedIn" ng-click="logout()">Logout</a></li>
           </ul>
         </div>
       </div>
